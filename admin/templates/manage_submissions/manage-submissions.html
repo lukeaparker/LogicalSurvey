@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% include '/partials/admin-navigationbar.html' %} 
+
+<h1>Manage Submissions</h1>
+
+
+<div class="container">
+    {% if submissions %}
+    {% for submission in submissions %}
+        {% include 'manage_submissions/partials/submission-card.html' %}
+    {% endfor %}
+    {% else %}
+        <p class="align-middle">No Submissions</p>
+    {% endif %}
+
+</div>
+
+
+
+{% endblock %}

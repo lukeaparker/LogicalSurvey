@@ -1,0 +1,17 @@
+<div class="card question-card w-100">
+    <div class="pt-4 pb-4 w-100">
+        <div class="row w-100">
+            <div class="col-sm-11 d-flex flex-column">
+                    <p class="card-text text-left">Email: {{submission.email}}</p>
+                    <p class="card-text text-left">Referrals: {{submission.referrals}}</p>
+                <div class="d-flex align-self-end">
+                    <a class="btn btn-outline-primary"
+                        href="/admin/manage-submissions/view/{{submission.ID}}">View</a>
+                    <form method='POST' action='/admin/manage-submissions/delete/{{submission.ID}}'>
+                        <button class="btn btn-outline-danger" type='submit'>Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

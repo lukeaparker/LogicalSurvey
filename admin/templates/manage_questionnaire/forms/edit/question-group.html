@@ -1,0 +1,50 @@
+{% if question %}
+<form action="/admin/manage-questionnaire/update/{{ question._id }}" method="post">
+    <h1>Edit Group Question</h1>
+    <div class="form-group text-left">
+        <label for="question-text text-left">Question Text</label>
+        <input type="text" name="question-text" class="form-control" id="question-text"
+            placeholder="Enter question text" value="{{question.text}}">
+    </div>
+    <div class="form-group text-left">
+        <label for="question-text">Question Substatement</label>
+        <input type="text" name="substatement" class="form-control" id="substatement" placeholder="Enter substatement text"
+            value="{{question.substatement}}">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                Questions in Group
+            </div>
+            <div class="col-sm">
+                Avalable Questions
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                {% for subquestion in subquestions %}
+                <div class="input-group-prepend">
+                    <label>{{subquestion.text}}</label>
+                    <a
+                        href="/admin/manage-questionnaire/question-group/remove-subquestion/{{question._id}}/{{subquestion._id}}">Remove</a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-sm">
+                {% for subquestion in questions %}
+                <div class="input-group-prepend">
+                    <label>{{subquestion.text}}</label>
+                    <a
+                        href="/admin/manage-questionnaire/question-group/add-subquestion/{{question._id}}/{{subquestion._id}}">Add</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn long-btn btn btn-primary w-100">Submit</button>
+    </div>
+</form>
+{% else %}
+<h1 style="margin-top: 50%;">No question found</h1>
+{% endif %}

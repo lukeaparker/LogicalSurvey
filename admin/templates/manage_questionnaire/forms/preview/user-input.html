@@ -1,0 +1,22 @@
+<form action="/admin/manage-questionnaire/preview/record/{{question._id}}" method="post">
+    <label class="form-header">{{question_text}}</label>
+    <br>
+    <label class="form-subheader">{{question.substatement}}</label>
+    <div class="form-group user-input-group">
+        {% if question.input_field_type == 'email' %}
+        <input class="text-field" type="email" name="question-answer" class="form-control" id="question-answer"
+            placeholder="name@email.com">
+        {% elif question.input_field_type == 'zipcode' %}
+        <input class="text-field" type="text" pattern="[0-9]{5}" name="question-answer" class="form-control" id="question-answer"
+            placeholder="10111">
+        {% else %}
+        <input class="text-field" type="text" name="question-answer" class="form-control" id="question-answer"
+            placeholder="Here is my answer">
+        {% endif %}
+    </div>
+    <div class="text-center mt-5">
+        <input type="button" value="Previous" onclick="history.back()" class="btn btn-outline-primary long-btn">
+        <button type="submit" class="btn btn-outline-primary long-btn">Continue</button>
+    </div>
+</form>
+

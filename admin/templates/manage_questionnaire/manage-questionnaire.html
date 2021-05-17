@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% include '/partials/admin-navigationbar.html' %} 
+
+<head>
+    <link rel="stylesheet"
+        href="{{ url_for('manage_questionnaire.static', filename='CSS/manage_questionnaire.css') }}" />
+</head>
+<div class="content overflow-hidden h-100 border-top">
+    <div class="row overflow-hidden h-100">
+        <div class="col-3" style="padding-top: 5%;">
+            <div class="p-2 text-center">
+                <div class="content w-100">
+                    <h1>Manage Questionnaire</h1>
+                    <form class="p-3" action="/admin/manage_questionnaire/update-results" method="POST">
+                        <div class="form-group text-left">
+                            <label for="questionnaire-heading">Results Page Heading</label>
+                            <textarea class="form-control" id="questionnaire-heading" name="questionnaire-heading"
+                                rows="2">{{preview_result.heading if preview_result.heading else ''}}</textarea>
+                        </div>
+                        <div class="form-group text-left">
+                            <label for="questionnaire-summary">Results Page Summary</label>
+                            <textarea class="form-control" id="questionnaire-summary" name="questionnaire-summary"
+                                rows="2">{{preview_result.summary if preview_result.summary else ''}}</textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary w-100">Update Results Page</button>
+                        </div>
+                    </form>
+                    <div class="dropdown mt-3">
+                        <button class="btn btn-primary dropdown-toggle w-100" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Add new question
+                        </button>
+                        <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item"
+                                href="/admin/manage-questionnaire/create-question/main/multiple_choice">Multiple
+                                Choice</a>
+                            <a class="dropdown-item"
+                                href="/admin/manage-questionnaire/create-question/main/user_input">User
+                                Input</a>
+                            <a class="dropdown-item"
+                                href="/admin/manage-questionnaire/create-question/main/yes-no">Yes/No</a>
+                            <a class="dropdown-item"
+                                href="/admin/manage-questionnaire/create-question/main/statement">Statement</a>
+                            <a class="dropdown-item"
+                                href="/admin/manage-questionnaire/create-question/main/question-group">Question
+                                Group</a>
+                        </div>
+                    </div>
+                    <a class="btn btn-primary w-100 mt-3" style="color: white", href="/admin/manage-questionnaire/preview/1">Preview</a>
+                    <form class="w-100 mt-3" method='POST' action='/admin/manage-questionnaire/publish'>
+                        <button class="btn btn-dark w-100" type='submit'>Publish</button>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="col-9 overflow-auto border-left" style="height: 100%; padding: 0px;">
+            {% for question in questions %}
+                {% include 'manage_questionnaire/partials/question-card.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

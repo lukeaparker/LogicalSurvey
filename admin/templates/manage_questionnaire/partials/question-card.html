@@ -1,0 +1,23 @@
+<div class="card question-card w-100">
+    <div class="pt-4 pb-4 w-100">
+        <div class="row w-100">
+            <div class="col-sm-1">
+                <p>{{question.rank}}</p>
+            </div>
+            <div class="col-sm-11 d-flex flex-column">
+                <p class="card-text text-left">{{question.text}}</p>
+                <div class="d-flex align-self-end">
+                    <a class="btn btn-outline-primary"
+                        href="/admin/manage-questionnaire/update/{{ question._id }}">Edit</a>
+                    <a class="btn btn-outline-light" 
+                        href="/admin/manage-questionnaire/update/{{ question._id }}/logic-jump">Jumps</a>
+                    {% if question.preset != True%}
+                    <form method='POST' action='/admin/manage-questionnaire/delete/{{ question._id }}'>
+                        <button class="btn btn-outline-danger" type='submit'>Delete</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

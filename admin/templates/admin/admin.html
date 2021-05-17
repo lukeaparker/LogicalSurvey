@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% include '/partials/admin-navigationbar.html' %} 
+
+
+<div class="container">
+<div class="row align-middle">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+              <h2 class="card-title">Manage Questionnaire</h2>
+              <p class="card-text">Manage your questionnaire.</p>
+              <a href="/admin/manage-questionnaire" class="btn long-btn btn btn-primary w-100">Manage Questionnaire</a>
+            </div>
+          </div>        
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+              <h2 class="card-title">Manage Submissions</h2>
+              <p class="card-text">Manage submissions.</p>
+              <a href="/admin/manage-submissions" class="btn long-btn btn btn-primary w-100">Manage Submissions</a>
+            </div>
+          </div>        
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+              <h2 class="card-title">Manage Site Analytics</h2>
+              <p class="card-text">View analytics.</p>
+              <a href="#" class="btn long-btn btn btn-primary w-100">View Analytics</a>
+            </div>
+          </div>        
+    </div>
+
+</div>
+</div>
+
+
+
+
+
+
+
+{% endblock %}

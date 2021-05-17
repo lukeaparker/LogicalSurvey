@@ -1,0 +1,127 @@
+
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-family: Jacques Francois;
+  font-style: normal;
+  font-weight: normal;
+  background-color: #121212;
+  color: #9e9e9e;
+}
+
+.card {
+  max-width: 950px;
+  margin: auto;
+}
+
+.card {
+  background-color: transparent;
+  border: none;
+}
+
+.card-small {
+  max-width: 150px;
+  margin: auto;
+  padding-bottom: 30px;
+}
+
+h2 {
+  font-size: 2.5rem;
+  padding-bottom: 15px;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+p {
+  font-size: 24px;
+}
+
+.navigation-bar {
+  background-color: #1e1e1e;
+  border-color: #1e1e1e;
+  color: #9e9e9e;
+}
+
+a, a:hover, a:active, a:visited { color: #9e9e9e;  }
+
+a:link {
+  text-decoration: none;
+}
+
+.nav-button {
+  border: 2px solid #9e9e9e;
+  border-radius: 7px;
+  padding: 14px 31px;
+  width: 242px;
+
+  display: inline-block;
+  cursor: pointer;
+
+  font-size: 20px;
+  text-decoration: none;
+  text-align-last: center;
+}
+
+.nav-button:active {
+position:relative;
+  top:1px;
+}
+
+.apply-button {
+  border: 2px solid #9e9e9e;
+  border-radius: 7px;
+  padding: 22px 31px;
+  width: 367px;
+
+  display: inline-block;
+  cursor: pointer;
+
+  font-size: 36px;
+  text-decoration: none;
+  text-align-last: center;
+}
+
+.content-1 {
+  width: 100%;
+  height: 802px;
+  margin: auto;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.align-top {
+  padding-top: 1%;
+}
+
+.align-middle-top {
+  padding-top: 5%;
+}
+
+.align-middle {
+  padding-top: 10%;
+}
+
+.align-3 {
+  padding-top: 30%;
+}
+
+.space-1 {
+  padding-bottom: 15px;
+}

@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% include '/partials/admin-navigationbar.html' %} 
+
+<head>
+    <link rel="stylesheet"
+        href="{{ url_for('manage_questionnaire.static', filename='CSS/manage_questionnaire.css') }}" />
+</head>
+<div class="content overflow-hidden h-100 border-top">
+    <div class="row overflow-hidden h-100">
+        <div class="col-3" style="padding-top: 5%;">
+            <div class="p-2 text-left">
+                <div class="content w-100">
+                    <h1>Manage Submissions</h1>
+                    <form class="p-3" action="/admin/manage-submissions/add-note/{{id}}" method="POST">
+                      
+                        <div class="form-group text-left">
+                            <label for="questionnaire-summary">Add Note</label>
+                            <textarea class="form-control" id="note" name="note"
+                                rows="2"note></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary w-100">Add Note</button>
+                        </div>
+                    </form>
+                    <h3>Notes</h3>
+                    {% for note in submission.notes %}
+                        <p>{{note}}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-9 overflow-auto border-left" style="height: 100%; padding: 0px;">
+            <div class="card question-card w-100">
+                <div class="pt-4 pb-4 w-100">
+                    <div class="row w-100">
+                        <div class="col-sm-11 d-flex flex-column">
+                                <p class="card-text text-left">Email: </p>
+                                <p class="card-text text-left">{{submission.email}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card question-card w-100">
+                <div class="pt-4 pb-4 w-100">
+                    <div class="row w-100">
+                        <div class="col-sm-11 d-flex flex-column">
+                                <p class="card-text text-left">Name: </p>
+                                <p class="card-text text-left">{{submission.name}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card question-card w-100">
+                <div class="pt-4 pb-4 w-100">
+                    <div class="row w-100">
+                        <div class="col-sm-11 d-flex flex-column">
+                                <p class="card-text text-left">Zipcode</p>
+                                <p class="card-text text-left">{{submission.zipcode}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card question-card w-100">
+                <div class="pt-4 pb-4 w-100">
+                    <div class="row w-100">
+                        <div class="col-sm-11 d-flex flex-column">
+                                <p class="card-text text-left">Referrals: </p>
+                                <p class="card-text text-left">{{submission.referral_count}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card question-card w-100">
+                <div class="pt-4 pb-4 w-100">
+                    <div class="row w-100">
+                        <div class="col-sm-11 d-flex flex-column">
+                                <p class="card-text text-left">Responses: </p>
+                                <ol>
+                                    {% for response in submission.responses %}
+                                        <li style="margin-left: 30px; font-size:25px;"><p style="width: 100%; text-align:left;">{{response.question_text}}</p></li>
+                                        <ul>
+                                            <li style="margin-left: 60px; font-size:20px;"><p style="width: 100%; text-align:left;">{{response.value}}</p></li>
+                                        </ul>
+                                    {% endfor %}
+                                </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

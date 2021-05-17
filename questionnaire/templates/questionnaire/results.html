@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include 'partials/navs/navigationbar.html' %}
+
+<head>
+  <link rel="stylesheet" href="{{ url_for('questionnaire.static', filename='CSS/results.css') }}" />
+</head>
+<div class="container">
+  <div class="row text-left justify-content-center">
+    <div class="col-sm-7 p-3">
+      <h2>{{preview_result_template.heading}}</h2>
+      <h4>{{preview_result_template.summary}}</h4>
+      <br>
+      <br>
+      <h4>
+        Our team devotes considerable time to reviewing each application, screening for fit with our community. We ask
+        for a no-risk $25 deposit to demonstrate serious interest in joining the Shepherde Club, or that you invite 10
+        friends.
+        <br>
+        <br>
+        You will receive notice if you are accepted or not within 7 days. If not, we will refund the $25 charge. If you
+        are accepted into the Shepherde Club, the $25 will go towards your first year’s club dues.
+      </h4>
+    </div>
+  </div>
+</div>
+<script src="{{ url_for('questionnaire.static', filename='JS/app.js') }}"></script>
+<!-- Load Stripe.js on your website. -->
+<script src="https://js.stripe.com/v3"></script>
+{% endblock %}

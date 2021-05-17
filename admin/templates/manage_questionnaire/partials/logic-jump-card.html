@@ -1,0 +1,95 @@
+<div class="card border-secondary w-75 mb-4">
+    <meta id="question-data" data-questions="{{questions}}">
+    <div class="card-header d-flex justify-content-between">
+        <h5 class="text-left">When some answers question {{question.rank}}</h5>
+        <a href="/admin/manage-questionnaire/update/{{question._id}}/logic-jump/{{jump._id}}/remove">Delete</a>
+    </div>
+    <div class="card-body">
+        <a href="/admin/manage-questionnaire/update/{{question._id}}/logic-jump/{{jump._id}}/add-condition/">Add Condition</a>
+        {% for condition in jump.conditions %}
+        <div class="form-inline">
+            <label for="{{condition.id}}-question" class="m-2">If</label>
+            <select class="form-control w-50" id="{{condition.id}}-question" name="{{condition.id}}-question">
+                {% for question in questions %}
+                <option {{"selected='selected" if condition.question_id == question._id|string else ""}} value="{{question._id}}">{{question.text}}</option>
+                {% endfor %}
+            </select>
+            <select class="form-control" id="{{condition.id}}-eval" name="{{condition.id}}-eval">
+                <option {{"selected='selected" if condition.eval == "is" else ""}} value="is">is</option>
+                <option {{"selected='selected" if condition.eval == "is not" else ""}} value="is not">is not</option>
+            </select>
+            <script type="text/javascript">
+                var ObjectId = (string) => string
+                var None = null
+                var False = false
+                var True = true
+                var questions = $('#question-data').data()['questions']
+                questions = eval(questions)
+
+                $('#{{condition.id}}-question').change((event) =>{
+                    questions.forEach(question => {
+                        if (question['_id'] == event.target.value) {
+                            console.log(question['qtype'])
+                            var str = `${'{{condition.id}}'}`
+                            if (question['qtype'] == 'multiple_choice') {
+                                $('#{{condition.id}}-value-options').html(`
+                                    <select class="form-control" id="{{condition.id}}-value" name="{{condition.id}}-value">
+                                        ${ question['multiple_choices'].map(choice => `<option value="${choice['text']}">${choice['text']}</option>`)}
+                                    </select>
+                                `)
+                            } else {
+                                $('#{{condition.id}}-value-options').html(`<input class="form-control m-2" id="{{condition.id}}-value" name="{{condition.id}}-value">`)
+                            }
+                        }
+                    });
+                })
+            </script> 
+            <div id="{{condition.id}}-value-options">
+                {% if condition.question_id %}
+                    {% for question_1 in questions %}
+                        {% if question_1._id|string == condition.question_id %}
+                            {% if question_1.qtype == 'multiple_choice' %}
+                            <select class="form-control" id="{{condition.id}}-value" name="{{condition.id}}-value">
+                                {% for choice in question_1.multiple_choices %}
+                                <option {{"selected='selected" if condition.value == choice.text else ""}} value="{{choice.text}}">{{choice.text}}</option>
+                                {% endfor %}
+                            </select>
+                            {% else %}
+                            <input class="form-control m-2" id="{{condition.id}}-value" name="{{condition.id}}-value" value="{{condition.value}}">
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {% if questions[0].qtype == 'multiple_choice' %}
+                    <select class="form-control" id="{{condition.id}}-value" name="{{condition.id}}-value">
+                        {% for choice in questions[0].multiple_choices %}
+                        <option {{"selected='selected" if condition.value == choice.text else ""}} value="{{choice.text}}">{{choice.text}}</option>
+                        {% endfor %}
+                    </select>
+                    {% else %}
+                    <input class="form-control m-2" id="{{condition.id}}-value" name="{{condition.id}}-value" value="{{condition.value}}">
+                    {% endif %}
+                {% endif %}
+            </div>
+            {% if jump.conditions|length > 1 and loop.index != jump.conditions|length %}
+            <select class="form-control" id="{{condition.id}}-next" name="{{condition.id}}-next">
+                <option {{"selected='selected" if condition.next == 'and' else ""}} value="and">and</option>
+                <option {{"selected='selected" if condition.next == 'or' else ""}} value="or">or</option>
+            </select>
+            {% endif %}
+            {% if loop.index != 1 %}
+            <a href="/admin/manage-questionnaire/update/{{question._id}}/logic-jump/{{jump._id}}/remove-condition/{{condition.id}}">Delete</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    <div class="card-footer d-flex" >
+        <label for="{{jump._id}}-jumps-to"><b>Then jumps</b> to</label>
+        <select class="form-control w-50" id="{{jump._id}}-jumps-to" name="{{jump._id}}-jumps-to">
+            {% for question in questions %}
+            <option {{"selected='selected" if jump.jumps_to == question._id|string else ""}} value="{{question._id}}">{{question.text}}</option>
+            {% endfor %}
+            <option {{"selected='selected" if jump.jumps_to == '-1' ""}} value="-1">Default End</option>
+        </select>
+    </div>
+</div>

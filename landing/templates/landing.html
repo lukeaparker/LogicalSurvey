@@ -1,0 +1,16 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include 'partials/navs/navigationbar.html' %}
+<div class="content-1 text-center">
+  <div class="w-50">
+    <h2 class="text-left">
+      InForm is a form builder funded by Zeta Apps. Create a report using the current form here.
+    </h2>
+  </div>
+  <a href="/questionnaire" class="apply-button">Submit</a>
+</div>
+
+{% endblock %}

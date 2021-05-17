@@ -1,0 +1,57 @@
+{% if question %}
+<form action="/admin/manage-questionnaire/update/{{ question._id }}" method="post">
+    <h1>Edit Multiple Choice</h1>
+    <div class="form-group text-left">
+        <div class="form-group text-left">
+            <label for="question-text">Question Text</label>
+            <input type="text" name="question-text" class="form-control" id="question-text"
+                placeholder="Enter question text" value="{{question.text}}">
+        </div>
+        <div class="form-group text-left">
+            <label for="question-text">Question Substatement</label>
+            <input type="text" name="substatement" class="form-control" id="substatement" placeholder="Enter substatement"
+                value="{{question.substatement}}">
+        </div>
+        <div class="form-group text-left">
+            <label for="question-text">Question Value</label>
+            <input type="number" name="value" class="form-control" id="value" placeholder="Value"
+                value="{{question.value}}">
+        </div>
+        <div class="form-group text-left">
+            <label for="question-reference" required>Question Identifier</label>
+            <input type="text" name="question-reference" class="form-control" id="question-reference"
+                placeholder="Enter question text" value="{{question.question_reference}}">
+        </div>
+    </div>
+    <div class="form-group text-left">
+        <label class="text-left" for="multi_choice_type">Multi Choice Type</label>
+        <select name="multi_choice_type" class="form-control">
+            <option {{"selected='selected'" if question.multi_choice_type == "long" else ""}} value="long">Long</option>
+            <option {{"selected='selected'" if question.multi_choice_type == "medium" else ""}} value="medium">Medium</option>
+            <option {{"selected='selected" if question.multi_choice_type == "short" else ""}} value="short">Short</option>
+        </select>
+    </div>
+    <div class="text-left form-group space-1">
+        <a href="/admin/manage-questionnaire/update/multiple-choice/add-option/{{question._id}}">Add choice</a>
+        <br>
+        <a href="/admin/manage-questionnaire/update/multiple-choice/toggle-type/{{question._id}}">
+            {{'Turn Multi-select Off' if question.multi_select else 'Turn Multi-select On'}}
+        </a>
+    </div>
+    {% for choice in question.multiple_choices %}
+    <div class="form-group">
+        <div class="input-group-prepend">
+            <label for="{{choice.id}}">Choice {{loop.index}}</label>
+            <input type="text" name="{{choice.id}}" class="form-control" id="{{choice.id}}" placeholder="Choice answer"
+                value="{{choice.text}}">
+            <a href="/admin/manage-questionnaire/update/multiple-choice/delete-option/{{question._id}}/{{choice.id}}">
+                Delete
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="text-center">
+        <button type="submit" class="btn long-btn btn btn-primary w-100">Submit</button>
+    </div>
+</form>
+{% endif %}

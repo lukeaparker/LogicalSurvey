@@ -1,0 +1,5 @@
+# Finder
+.DS_Store
+env/
+UPLOADS/*
+__pycache__/

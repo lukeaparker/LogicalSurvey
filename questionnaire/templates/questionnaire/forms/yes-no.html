@@ -1,0 +1,29 @@
+<form action="/questionnaire/record/{{question._id}}" method="post">
+    <label class="form-header">{{question_text}}</label>
+    <br>
+    <label class="form-subheader">{{question.substatement}}</label>
+    <div class="radio-group">
+        <input required type="radio" id="yes" name="question-answer" value="yes">
+        <label for="yes">Yes</label>
+        <input type="radio" id="no" name="question-answer" value="no">
+        <label for="no">No</label>
+    </div>
+    <div class="text-center" style="display: none;">
+        <button id="question_submit" type="submit" class="btn long-btn">Submit</button>
+    </div>
+    <script>
+        $(document).ready(() => {
+            $('#question_submit').focus()
+
+            $('*').change(function () { $('#question_submit').focus(); });
+
+            $("label").on('click', e => {
+                previous = $(e.currentTarget).prev()
+                if (previous.is("input[type='radio']")) {
+                    previous.prop("checked", true)
+                    $("form").submit()
+                }
+            })
+        })
+    </script>
+</form>
