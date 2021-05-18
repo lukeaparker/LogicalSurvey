@@ -5,7 +5,6 @@ from flask import Blueprint, session, redirect
 from flask import render_template, request
 from utils import save_questionnaire_answer
 from questionnaire.models import PublicQuestionnaire
-from email_services.hash_email import unhash_email
 from db import db
 
 public_questionnaire = PublicQuestionnaire(db)
@@ -166,12 +165,6 @@ def results():
     }
 
     db.submissions.update({"email": submission['email']}, submission, upsert=True)
-    db.submissions.update({"email": submission['email'], "referral_count": {"$exists": False}}, {"$set": {"referral_count": 0}})
-
-    if session.get('referral'):
-        email = unhash_email(session['referral'])
-        db.submissions.update({"email": email}, {"$inc": {"referral_count": 1}})
-        del session['referral']
 
     return render_template('questionnaire/results.html', results_page=True, preview_result_template=parsed_template)
 

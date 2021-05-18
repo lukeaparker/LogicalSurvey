@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, session
 import bcrypt
 from db import db
+from utils import restricted
 import sys
 
 auth = Blueprint('auth', __name__, template_folder='templates')
@@ -39,6 +40,7 @@ def admin_logout():
 
 
 @auth.route('/admin/create', methods=["GET", "POST"])
+@restricted(access_level='admin')
 def admin_logadmin_Createout():
     if request.method == "GET":
         return render_template('auth/admin-create.html')

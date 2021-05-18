@@ -15,9 +15,6 @@ def test_login_fail(test_client):
     assert response.status_code == 200
     assert b"Login" in response.data
 
-
-    
-
 def test_admin(test_client,):
     """Access admin route.""" 
 

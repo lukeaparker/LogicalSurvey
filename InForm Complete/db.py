@@ -5,12 +5,14 @@ import argparse
 
 from pymongo import MongoClient
 from flask import Flask, current_app
+from dotenv import load_dotenv
+load_dotenv()
 
 
 class MongDB(): 
 
     def __init__(self): 
-        uri = os.environ.get('DB_URI', 'mongodb://root:AVeryStrongPassword1234@mongo:27017/Shepherde?authSource=admin')
+        uri = os.environ.get('DB_URI')
         client = MongoClient(uri)
         self.db = client.get_default_database()
 
@@ -38,7 +40,7 @@ class MongDB():
     def preload(self):
         admin = {
             'email': 'admin@zeta-apps.com',
-            'password': bcrypt.hashpw('super-secret-password'.encode('utf-8'), bcrypt.gensalt()),
+            'password': bcrypt.hashpw(os.environ.get('ADMIN_PASSWORD').encode('utf-8'), bcrypt.gensalt()),
             'access_level': 'admin'
         }
         self.users.update({'email': admin['email']}, admin, upsert=True)

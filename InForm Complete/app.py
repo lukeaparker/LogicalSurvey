@@ -1,17 +1,13 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, session, g
+from dotenv import load_dotenv
+from flask import Flask, session, g
 from bson.objectid import ObjectId
-from werkzeug.local import LocalProxy
 from db import db
-from flask_mail import Mail, Message
-
-
-
+load_dotenv()
 
 def create_app(config_filename):
     app = Flask(__name__)
     app.config.from_pyfile(config_filename)
-
 
     with app.app_context():
         db.load_app()
@@ -19,10 +15,6 @@ def create_app(config_filename):
     # App Config
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
-
-    # Email Server
-    mail = Mail()
-    mail.init_app(app)
 
     # Register blueprints
     from admin.manage_questionnaire import manage_questionnaire as manage_questionnaire_blueprint
@@ -40,12 +32,6 @@ def create_app(config_filename):
     from admin.manage_submissions import manage_submissions as manage_submissions_blueprint
     app.register_blueprint(manage_submissions_blueprint)
 
-    from email_services.referrals import referrals as referrals_blueprint
-    app.register_blueprint(referrals_blueprint)
-
-
-
-
     # Authenticate users 
     @app.before_request
     def load_user():
@@ -53,11 +39,7 @@ def create_app(config_filename):
         if not user and 'user' in session and session["user"]:
             user = db.users.find_one({'_id': ObjectId(session['user'])})
         g.user = user
-
-
     return app
-
-
 
 if __name__ == '__main__':
     app = create_app('config/local.py')

@@ -17,7 +17,6 @@ manage_submissions = Blueprint(
         'manage_submissions', __name__, template_folder='templates', static_folder='static'
     )
 
-
 @manage_submissions.route('/admin/manage-submissions')
 @restricted(access_level='admin')
 def manage_submissions_index():
@@ -28,7 +27,6 @@ def manage_submissions_index():
         res = {
             "ID": submission['_id'],
             "email":submission['email'],
-            "referrals": submission['referral_count']
         }
         results.append(res)
     print(results)  
