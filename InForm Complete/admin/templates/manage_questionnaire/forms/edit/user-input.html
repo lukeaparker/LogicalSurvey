@@ -4,12 +4,11 @@
     <div class="form-group text-left">
         <label class="text-left" for="input_field_type">Question Field Type</label>
         <select name="input_field_type" class="form-control">
-            <option {{"selected='selected" if question.input_field_type == "name" else ""}} value="name">name</option>
-            <option {{"selected='selected'" if question.input_field_type == "zipcode" else ""}} value="zipcode">zipcode
+            <option {{"selected='selected" if question.input_field_type == "text" else ""}} value="text">text</option>
+            <option {{"selected='selected'" if question.input_field_type == "number" else ""}} value="number">number
             </option>
             <option {{"selected='selected'" if question.input_field_type == "email" else ""}} value="email">email
             </option>
-            <option {{"selected='selected" if question.input_field_type == 'age' else ""}} value="age">age</option>
         </select>
     </div>
     <div class="form-group text-left">

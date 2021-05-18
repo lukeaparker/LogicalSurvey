@@ -32,11 +32,11 @@ def manage_questionnaire_view():
     # private_questionnaire.logic_jumps.remove()
     questions = list(private_questionnaire.get_all_questions())
 
-    results_previews = list(db.preview_results.find())
-    results_preview = results_previews[0] if len(
-        results_previews) > 0 else None
-    return render_template('manage_questionnaire/manage-questionnaire.html', questions=questions,
-                           preview_result=results_preview, admin_page=True)
+    questionnaire_settings = list(db.questionnaire_settings.find())
+    questionnaire_settings = questionnaire_settings[0] if len(
+        questionnaire_settings) > 0 else None
+    return render_template('manage_questionnaire/manage-questionnaire.html', 
+        questions=questions, questionnaire_settings=questionnaire_settings, admin_page=True)
 
 
 @manage_questionnaire.route('/manage-questionnaire/create-question/<group_id>/<qtype>')
@@ -44,7 +44,8 @@ def manage_questionnaire_view():
 def create_question(group_id, qtype):
     """Creates a new quesion document in the questionnarie collection."""
     question_id = private_questionnaire.create_question(group_id, qtype)
-    return redirect(url_for('manage_questionnaire.manage_questionnaire_view', question_id=question_id))
+    return redirect(url_for('manage_questionnaire.manage_questionnaire_view', 
+        question_id=question_id))
 
 
 @manage_questionnaire.route('/manage-questionnaire/update/<question_id>')
@@ -196,6 +197,26 @@ def question_delete_controller(question_id):
     return redirect(url_for('manage_questionnaire.manage_questionnaire_view'))
 
 
+@manage_questionnaire.route('/manage-questionnaire/preview/')
+@restricted(access_level='admin')
+def questionnaire_single_page_preview_view():
+    """Admin preview question."""
+    if not private_questionnaire.is_single_page:
+        return redirect('1')
+
+    # Create the questionnarie cache to save the questions answers
+    session['cached_questionnaire'] = {}
+    session['cached_references'] = {}
+
+    questions = list(private_questionnaire.get_all_toplevel_questions())
+    subquestions = []
+    for question in questions:
+        subquestions.append(list(private_questionnaire.get_all_group_questions(str(question['_id']))))
+
+    return render_template('manage_questionnaire/single-page-preview.html',
+        questions=zip(questions, subquestions))
+
+
 @manage_questionnaire.route('/manage-questionnaire/preview/<rank>')
 @restricted(access_level='admin')
 def questionnaire_preview_view(rank):
@@ -221,10 +242,10 @@ def questionnaire_preview_view(rank):
 def questionnaire_preview_controller(question_id):
     """Save the question with the given id's answer to the cache."""
     question = private_questionnaire.get_question_by_id(question_id)
-    
+
     answer = request.form.getlist('question-answer') if question['multi_select'] else request.form.get('question-answer')
     private_questionnaire.save_questionnaire_answer(question['question_reference'], question_id, answer)
-    
+
     next_rank = int(question["rank"]) + 1 if question['rank'].isnumeric() else ''
     if question['qtype'] == 'question-group':
         total_subquestions = private_questionnaire.count_group_subquestions(str(question['_id']))
@@ -252,20 +273,35 @@ def questionnaire_preview_controller(question_id):
         
     return redirect(f'/admin/manage-questionnaire/preview/{next_rank}')
 
+@manage_questionnaire.route('/manage-questionnaire/record-single-page', methods=['POST'])
+@restricted(access_level='admin')
+def single_page_questionnaire_controller():
+    for question_id in request.form.keys():
+        question = private_questionnaire.get_question_by_id(question_id)
+        if question:
+            answer = request.form.getlist(question_id) if question['multi_select'] else request.form.get(question_id)
+            private_questionnaire.save_questionnaire_answer(question['question_reference'], question_id, answer)
+        else:
+            print("Issue occured while recording question answer.")
+    return redirect('/admin/manage-questionnaire/preview/results')
 
 @manage_questionnaire.route('/manage_questionnaire/update-results', methods=['POST'])
+@restricted(access_level='admin')
 def update_results():
-    preview_results = db.preview_results
-    new_results = {
+    questionnaire_settings = db.questionnaire_settings
+    new_settings = {
         'heading': request.form.get('questionnaire-heading'),
-        'summary': request.form.get('questionnaire-summary')
+        'summary': request.form.get('questionnaire-summary'),
+        'is_single_page': request.form.get('is-single-page') == "yes"
     }
-    if preview_results.count() == 0:
-        preview_results.insert_one(new_results)
+    if questionnaire_settings.count() == 0:
+        questionnaire_settings.insert_one(new_settings)
     else:
-        results = preview_results.find()[0]
-        preview_results.update_one(
-            {'_id': results['_id']}, {'$set': new_results})
+        results = questionnaire_settings.find()[0]
+        questionnaire_settings.update_one(
+            {'_id': results['_id']}, {'$set': new_settings})
+    private_questionnaire.is_single_page = request.form.get('is-single-page') == "yes"
+    public_questionnaire.is_single_page = private_questionnaire.is_single_page
     return redirect(url_for('manage_questionnaire.manage_questionnaire_view'))
 
 
@@ -273,14 +309,14 @@ def update_results():
 @restricted(access_level='admin')
 def preview_results():
     """Render results of questionnaire."""
-    preview_result_templates = list(db.preview_results.find())
-    preview_result_template = preview_result_templates[0] if len(
-        preview_result_templates) > 0 else None
-    parsed_template = {
-        'heading': private_questionnaire.parse(preview_result_template['heading']),
-        'summary': private_questionnaire.parse(preview_result_template['summary'])
+    questionnaire_settings = list(db.questionnaire_settings.find())
+    questionnaire_setting = questionnaire_settings[0] if len(
+        questionnaire_settings) > 0 else None
+    results_template = {
+        'heading': private_questionnaire.parse(questionnaire_setting['heading']),
+        'summary': private_questionnaire.parse(questionnaire_setting['summary'])
     }
-    return render_template('questionnaire/results.html', results_page=True, preview_result_template=parsed_template)
+    return render_template('questionnaire/results.html', results_page=True, preview_result_template=results_template)
 
 
 @manage_questionnaire.route('/manage-questionnaire/publish', methods=['POST'])

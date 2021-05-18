@@ -18,7 +18,7 @@ class MongDB():
         if current_app.config['DATABASE'] != 'test':
             self.public_questionnaire = self.db.public_questionnaire
             self.private_questionnaire = self.db.private_questionnaire
-            self.preview_results = self.db.preview_results
+            self.questionnaire_settings = self.db.questionnaire_settings
             self.public_logic_jumps = self.db.public_logic_jumps
             self.private_logic_jumps = self.db.private_logic_jumps
             self.submissions = self.db.submissions 
@@ -28,7 +28,7 @@ class MongDB():
             # Init test database 
             self.public_questionnaire = self.db.public_questionnaire_test
             self.private_questionnaire = self.db.private_questionnaire_test
-            self.preview_results = self.db.preview_results_test
+            self.questionnaire_settings = self.db.questionnaire_settings
             self.public_logic_jumps = self.db.public_logic_jumps_test
             self.private_logic_jumps = self.db.private_logic_jumps_test
             self.submissions = self.db.submissions_test
@@ -232,11 +232,12 @@ class MongDB():
         self.public_questionnaire.update({'question_reference': preferences['question_reference']}, preferences, upsert=True)
 
 
-        results = {
+        settings = {
             'heading': 'Thanks for applying!',
             'summary': 'Thank you for taking the time to submit an application!',
+            'is_single_page': True
         }
-        self.preview_results.update({'heading': results['heading']}, results, upsert=True)
+        self.questionnaire_settings.update({'heading': settings['heading']}, settings, upsert=True)
 
 
 db = MongDB()

@@ -13,6 +13,13 @@ questionnaire = Blueprint('questionnaire', __name__, template_folder='templates'
 
 @questionnaire.route('/')
 def determine_rank():
+    questionnaire_settings = list(db.questionnaire_settings.find())
+    questionnaire_settings = questionnaire_settings[0] if len(
+        questionnaire_settings) > 0 else None
+
+    if questionnaire_settings['is_single_page']:
+        return redirect('/questionnaire/single')
+
     if session.get("last_question_rank"):
         return redirect("/questionnaire/"+ str( int(session["last_question_rank"]) + 1))
     else:
@@ -39,6 +46,23 @@ def question_view(rank):
 
     question_text = public_questionnaire.parse(question['text'])
     return render_template('questionnaire/questionnaire.html', question_text=question_text, question=question)
+
+@questionnaire.route('/single')
+def questionnaire_single_page_preview_view():
+    """Admin preview question."""
+
+    # Create the questionnarie cache to save the questions answers
+    session['cached_questionnaire'] = {}
+    session['cached_references'] = {}
+    session['cached_responses'] = []
+
+    questions = list(public_questionnaire.get_all_toplevel_questions())
+    subquestions = []
+    for question in questions:
+        subquestions.append(list(public_questionnaire.get_all_group_questions(str(question['_id']))))
+
+    return render_template('questionnaire/single-page.html',
+        questions=zip(questions, subquestions))
 
 
 @questionnaire.route('/record/<question_id>', methods=['POST'])
@@ -91,22 +115,43 @@ def question_controller(question_id):
     return redirect(f'/questionnaire/{next_rank}')
 
 
+@questionnaire.route('/record-single-page', methods=['POST'])
+def single_page_questionnaire_controller():
+    for question_id in request.form.keys():
+        question = public_questionnaire.get_question_by_id(question_id)
+        if question:
+            answer = request.form.getlist(question_id) if question['multi_select'] else request.form.get(question_id)
+            response = {
+                "question_text": question['text'],
+                "value": answer
+            }
+            sys.stdout.flush()
+            if len(session["cached_responses"]) >= int(question["rank"]):
+                session["cached_responses"][int(question["rank"])-1] = response
+            else:
+                session["cached_responses"].append(response)
+            public_questionnaire.save_questionnaire_answer(question['question_reference'], question_id, answer)
+        else:
+            print("Issue occured while recording question answer.")
+    return redirect('/questionnaire/results')
+
+
 @questionnaire.route('/results')
 def results():
     """Render results of questionnaire."""
-    if not session.get("last_question_rank"):
+    if not session.get("last_question_rank") and public_questionnaire.is_single_page is False:
         return redirect('/questionnaire')
-    del session["last_question_rank"]
-
     
-    preview_result_templates = list(db.preview_results.find())
+    if session.get("last_question_rank"):
+        del session["last_question_rank"]
+    
+    preview_result_templates = list(db.questionnaire_settings.find())
     preview_result_template = preview_result_templates[0] if len(
         preview_result_templates) > 0 else None
     parsed_template = {
         'heading': public_questionnaire.parse(preview_result_template['heading']),
         'summary': public_questionnaire.parse(preview_result_template['summary'])
     }
-
 
     submission = {
         "email": session['cached_references']['email'],

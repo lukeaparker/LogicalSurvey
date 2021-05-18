@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include '/partials/admin-navigationbar.html' %} 
+<div class="container d-flex justify-content-center align-items-center">
+    <form class="text-left mt-5 mb-5" style="width: 50%;" method="POST" 
+    action="/admin/manage-questionnaire/record-single-page">
+        {% for question, subquestions in questions %}
+        {% if question.qtype == 'user_input' %}
+        {% include 'manage_questionnaire/partials/questions/user-input.html' %}
+        {% endif %}
+        {% if question.qtype == 'multiple_choice' %}
+        {% include 'manage_questionnaire/partials/questions/multiple-choice.html' %}
+        {% endif %}
+        {% if question.qtype == 'yes-no' %}
+        {% include 'manage_questionnaire/partials/questions/yes-no.html' %}
+        {% endif %}
+        {% if question.qtype == 'statement' %}
+        {% include 'manage_questionnaire/partials/questions/statement.html' %}
+        {% endif %}
+        {% if question.qtype == 'question-group' %}
+        {% include 'manage_questionnaire/partials/questions/question-group.html' %}
+        {% endif %}
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

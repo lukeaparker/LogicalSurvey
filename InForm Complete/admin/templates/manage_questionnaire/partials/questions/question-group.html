@@ -1,0 +1,21 @@
+<div class="mt-2 mb-2">
+    <label>{{question.text}}</label>
+    {% for subquestion in subquestions %}
+    {% set question = subquestion %}
+    {% if subquestion.qtype == 'user_input' %}
+    {% include 'manage_questionnaire/partials/questions/user-input.html' %}
+    {% endif %}
+    {% if subquestion.qtype == 'multiple_choice' %}
+    {% include 'manage_questionnaire/partials/questions/multiple-choice.html' %}
+    {% endif %}
+    {% if subquestion.qtype == 'yes-no' %}
+    {% include 'manage_questionnaire/partials/questions/yes-no.html' %}
+    {% endif %}
+    {% if subquestion.qtype == 'statement' %}
+    {% include 'manage_questionnaire/partials/questions/statement.html' %}
+    {% endif %}
+    {% if subquestion.qtype == 'question-group' %}
+    {% include 'manage_questionnaire/partials/questions/question-group.html' %}
+    {% endif %}
+    {% endfor %}
+</div>

@@ -19,6 +19,11 @@ class PublicQuestionnaire():
         self.questionnaire = db.public_questionnaire
         self.logic_jumps = db.public_logic_jumps
 
+        questionnaire_settings = list(db.questionnaire_settings.find())
+        questionnaire_settings = questionnaire_settings[0] if len(
+            questionnaire_settings) > 0 else None
+        self.is_single_page = questionnaire_settings['is_single_page']
+
     def get_question_by_id(self, question_id):
         """Return the question document with the given id"""
         return self.questionnaire.find_one({'_id': ObjectId(question_id)})
@@ -31,6 +36,13 @@ class PublicQuestionnaire():
         """Query all toplevel private questions."""
         query = {'$or': [{'group': ''}, {'qtype': 'question-group'}]}
         return self.questionnaire.find(query).sort([('rank', 1)]).collation({'locale': "en_US", 'numericOrdering': True})
+
+    def get_all_group_questions(self, group_id):
+        """Query all group private questions."""
+        query = {'group': group_id}
+        results = self.questionnaire.find(query).sort(
+            [('rank', 1)]).collation({'locale': "en_US", 'numericOrdering': True})
+        return results
 
     def get_all_question_logic_jumps(self, question_id):
         """Gets all the logic jumps connected to question with the given id"""
@@ -105,9 +117,9 @@ class PublicQuestionnaire():
                 if len(references[key]) != 1: 
                     all_but_last = ', '.join(references[key][:-1])
                     last = references[key][-1]
-                    new_string = ' and '.join([all_but_last, last]) 
+                    new_string = new_string.replace(key, ' and '.join([all_but_last, last])) 
                 else:
-                    new_string = references[key]
+                    new_string = new_string.replace(key, references[key][0])
             if key in new_string:
                 str(new_string)
                 new_string = new_string.replace(key, references[key])

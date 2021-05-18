@@ -1,0 +1,13 @@
+<div class="form-group">
+    <label for="user-input">{{question.text}}</label>
+    {% if question.input_field_type == 'email' %}
+    <input type="email" name="{{question._id}}" class="form-control" id="user-input"
+        placeholder="name@email.com" autocomplete="off">
+    {% elif question.input_field_type == 'number' %}
+    <input type="number" pattern="[0-9]{5}" name="{{question._id}}" class="form-control"
+        id="user-input" placeholder="10111" autocomplete="off">
+    {% else %}
+    <input name="{{question._id}}" class="form-control" id="user-input"
+        placeholder="" autocomplete="off">
+    {% endif %}
+</div>

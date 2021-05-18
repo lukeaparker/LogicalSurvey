@@ -17,15 +17,22 @@
                         <div class="form-group text-left">
                             <label for="questionnaire-heading">Results Page Heading</label>
                             <textarea class="form-control" id="questionnaire-heading" name="questionnaire-heading"
-                                rows="2">{{preview_result.heading if preview_result.heading else ''}}</textarea>
+                                rows="2">{{questionnaire_settings.heading if questionnaire_settings.heading else ''}}</textarea>
                         </div>
                         <div class="form-group text-left">
                             <label for="questionnaire-summary">Results Page Summary</label>
                             <textarea class="form-control" id="questionnaire-summary" name="questionnaire-summary"
-                                rows="2">{{preview_result.summary if preview_result.summary else ''}}</textarea>
+                                rows="2">{{questionnaire_settings.summary if questionnaire_settings.summary else ''}}</textarea>
+                        </div>
+                        <div class="form-group text-left">
+                            <label for="questionnaire-summary">Is Single Page</label>
+                            <select class="form-control" name="is-single-page">
+                                <option value="yes" {{ "selected" if questionnaire_settings.is_single_page else "" }}>Yes</option>
+                                <option value="no" {{ "" if questionnaire_settings.is_single_page else "selected" }}>No</option>
+                            </select>
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary w-100">Update Results Page</button>
+                            <button type="submit" class="btn btn-primary w-100">Update Settings</button>
                         </div>
                     </form>
                     <div class="dropdown mt-3">
@@ -49,7 +56,7 @@
                                 Group</a>
                         </div>
                     </div>
-                    <a class="btn btn-primary w-100 mt-3" style="color: white", href="/admin/manage-questionnaire/preview/1">Preview</a>
+                    <a class="btn btn-primary w-100 mt-3" style="color: white", href="/admin/manage-questionnaire/preview">Preview</a>
                     <form class="w-100 mt-3" method='POST' action='/admin/manage-questionnaire/publish'>
                         <button class="btn btn-dark w-100" type='submit'>Publish</button>
                     </form>

@@ -6,8 +6,8 @@
         {% if question.input_field_type == 'email' %}
         <input class="text-field" type="email" name="question-answer" class="form-control" id="question-answer"
             placeholder="name@email.com">
-        {% elif question.input_field_type == 'zipcode' %}
-        <input class="text-field" type="text" pattern="[0-9]{5}" name="question-answer" class="form-control" id="question-answer"
+        {% elif question.input_field_type == 'number' %}
+        <input class="text-field" type="number" pattern="[0-9]{5}" name="question-answer" class="form-control" id="question-answer"
             placeholder="10111">
         {% else %}
         <input class="text-field" type="text" name="question-answer" class="form-control" id="question-answer"

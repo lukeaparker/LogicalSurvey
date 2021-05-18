@@ -14,11 +14,14 @@ CACHED_QUESTIONNAIRE = 'cached_questionnaire'
 class PublicQuestionnaire():
     def __init__(self, db):
         """Init questionnaire class."""
+        self.db = db
         self.questionnaire = db.public_questionnaire
         self.logic_jumps = db.public_logic_jumps
 
     def publish(self, private_questionniare):
         """Updates the public questionnaire with the given questionnaire."""
+        self.db.public_is_single_page = self.db.private_is_single_page
+
         self.questionnaire.remove()
         questions = private_questionniare.get_all_questions()
         for question in questions:
@@ -33,8 +36,14 @@ class PrivateQuestionnaire():
 
     def __init__(self, db):
         """Init questionnaire class."""
+        self.db = db
         self.questionnaire = db.private_questionnaire
         self.logic_jumps = db.private_logic_jumps
+        
+        questionnaire_settings = list(db.questionnaire_settings.find())
+        questionnaire_settings = questionnaire_settings[0] if len(
+            questionnaire_settings) > 0 else None
+        self.is_single_page = questionnaire_settings['is_single_page']
 
     def get_question_by_id(self, question_id):
         query = {'_id': ObjectId(question_id)}
@@ -207,7 +216,7 @@ class PrivateQuestionnaire():
         condition = {'id': str(uuid.uuid4()), 'question_id': '', 'eval': 'is', 'value': '', 'next': ''}
         update_query = {'$push': {'conditions': condition}}
         self.logic_jumps.update_one(query, update_query)
-    
+
     def delete_logic_jump_condition(self, jump_id, condition_id):
         """Adds an empty condition to a logicjump"""
         query = {'_id': ObjectId(jump_id)}
@@ -330,14 +339,4 @@ class PrivateQuestionnaire():
         for key in references:
             if key in text:
                 new_string = new_string.replace(key, references[key])
-        return new_string
-
-    def clean_title(self, text):
-        """Checks questionnaire tittle or substatement for identifiers then
-        replaces them return a cleaned title."""
-        questionnaire = session['cached_references']
-        new_string = text
-        for key in questionnaire:
-            if key in text:
-                new_string = new_string.replace(key, questionnaire[key])
         return new_string

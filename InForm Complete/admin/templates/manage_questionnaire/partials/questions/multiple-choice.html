@@ -1,0 +1,21 @@
+{% if question.multi_select %}
+<div class="form-group">
+    <label>{{question.text}}</label>
+    {% for choice in question.multiple_choices %}
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="{{choice.id}}" 
+        value="{{choice.text}}" name="{{question._id}}">
+        <label class="form-check-label" for="{{choice.id}}">{{choice.text}}</label>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="form-group">
+    <label>{{question.text}}</label>
+    <select class="form-control" name="{{question._id}}">
+        {% for choice in question.multiple_choices %}
+        <option value="{{choice.text}}">{{choice.text}}</option>
+        {% endfor %}
+    </select>
+</div>
+{% endif %}
