@@ -8,6 +8,7 @@
 
 html, body {
   height: 100%;
+  background-color: #121212;
 }
 
 body {
@@ -124,4 +125,14 @@ position:relative;
 
 .space-1 {
   padding-bottom: 15px;
+}
+
+.form-control {
+    background-color: #202020;
+    color: white;
+}
+
+.form-control:focus {
+    background-color: #353535;
+    color: white;
 }

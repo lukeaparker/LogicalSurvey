@@ -337,6 +337,14 @@ class PrivateQuestionnaire():
         references = session['cached_references']
         new_string = text
         for key in references:
-            if key in text:
+            if type(references[key]) == list:
+                if len(references[key]) != 1: 
+                    all_but_last = ', '.join(references[key][:-1])
+                    last = references[key][-1]
+                    new_string = new_string.replace(key, ' and '.join([all_but_last, last])) 
+                else:
+                    new_string = new_string.replace(key, references[key][0])
+            if key in new_string:
+                str(new_string)
                 new_string = new_string.replace(key, references[key])
         return new_string
