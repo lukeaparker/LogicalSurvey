@@ -12,8 +12,7 @@ load_dotenv()
 class MongDB(): 
 
     def __init__(self): 
-        uri = os.environ.get('DB_URI')
-        client = MongoClient(uri)
+        client = MongoClient('mongodb://root:yoMama@mongo:27017/inForm?authSource=admin')
         self.db = client.get_default_database()
 
     def load_app(self):
@@ -40,7 +39,7 @@ class MongDB():
     def preload(self):
         admin = {
             'email': 'admin@zeta-apps.com',
-            'password': bcrypt.hashpw(os.environ.get('ADMIN_PASSWORD').encode('utf-8'), bcrypt.gensalt()),
+            'password': bcrypt.hashpw('yoMama'.encode('utf-8'), bcrypt.gensalt()),
             'access_level': 'admin'
         }
         self.users.update({'email': admin['email']}, admin, upsert=True)

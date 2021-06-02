@@ -1,23 +1,20 @@
-<div class="card question-card w-100">
-    <div class="pt-4 pb-4 w-100">
+
+
+    <div class="card card-dark card-item w-100" style="padding-top: 30px;">
+      <div class="card-body w-100">
         <div class="row w-100">
-            <div class="col-sm-1">
-                <p>{{question.rank}}</p>
-            </div>
-            <div class="col-sm-11 d-flex flex-column">
-                <p class="card-text text-left">{{question.text}}</p>
-                <div class="d-flex align-self-end">
-                    <a class="btn btn-outline-primary"
-                        href="/admin/manage-questionnaire/update/{{ question._id }}">Edit</a>
-                    <a class="btn btn-outline-light" 
-                        href="/admin/manage-questionnaire/update/{{ question._id }}/logic-jump">Jumps</a>
-                    {% if question.preset != True%}
-                    <form method='POST' action='/admin/manage-questionnaire/delete/{{ question._id }}'>
-                        <button class="btn btn-outline-danger" type='submit'>Delete</button>
-                    </form>
-                    {% endif %}
-                </div>
-            </div>
+
+          <div class="col w-70">{{question.text}}</div>
+          <div class="col w-10"><a href="/admin/manage-questionnaire/update/{{ question._id }}"><i class="material-icons" style="vertical-align: middle">edit</i></a></div>
+          <div class="col w-10"><a href="/admin/manage-questionnaire/update/{{ question._id }}/logic-jump"><i class="material-icons" style="vertical-align: middle">add</i></a></div>
+            <div class="col w-10">
+                <form method='POST' action='/admin/manage-questionnaire/delete/{{ question._id }}'>
+                <a href="#" onclick="$(this).closest('form').submit()"><i class="material-icons" style="vertical-align: middle">delete</i></a>            </form>
+          </div>
+
+
         </div>
+      </div>
     </div>
-</div>
+
+
