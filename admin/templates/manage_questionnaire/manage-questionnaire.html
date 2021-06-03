@@ -10,7 +10,7 @@
 <div class="content overflow-hidden h-100 border-top">
     <div class="row overflow-hidden h-100">
         <div class="col-3" style="padding-top: 5%;">
-            <div class="p-2 text-center">
+            <div class="p-2">
                 <div class="content w-100">
                     <form class="p-3" action="/admin/manage_questionnaire/update-results" method="POST">
                         <div class="form-group text-left">
@@ -30,6 +30,7 @@
                                 <option value="no" {{ "" if questionnaire_settings.is_single_page else "selected" }}>No</option>
                             </select>
                         </div>
+                        
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary w-100">Update Settings</button>
                         </div>
@@ -71,25 +72,54 @@
         <div class="col-9 overflow-auto border-left" style="height: 100%; padding: 0px; background-color: #202020; color: white;">
 
 
+     
+         
+<div style="background-image: linear-gradient(#ff3333, #202020); height: 400px;">
 
-            
-<div style="background-color: #ff3333;">
-                <div class="col">
-                    <h1 class="text-left" style="font-size: 60px; padding-left: 20px;">Edit Form</h1>
+
+
+
+    {% include 'partials/navs/navigationbar.html' %}
+
+
+
+
+                <div class="container">
+                    <h1 class="text-left" style="font-size: 60px; padding-left: 75px; padding-top: 30px;">Edit Form</h1>
                 </div> 
 
-                        <nav class="navbar navbar-expand-lg navbar-dark">
-            <div class="container-fluid">                
-            <a class="btn" style="color: white;" href="/logout"><i class="material-icons" style="vertical-align: middle">settings</i> Settings</a>
-                <a class="btn" style="color: white;" href="/logout"><i class="material-icons" style="vertical-align: middle">add</i> Add Question</a>
-                <a class="btn" style="color: white;" href="/logout"><i class="material-icons" style="vertical-align: middle">preview</i> Preview</a>
-                                <a class="btn" style="color: white;" href="/logout"><i class="material-icons" style="vertical-align: middle">publish</i> Publish</a>
+
+
+
+
+
+                    <div class="card card-dark card-item w-100 text-left" style="padding-top: 200px; border-bottom: 2px;">
+      <div class="card-body w-100">
+        <div class="row w-100">
+       
+        
+
+          <div class="col w-70">QUESTION TEXT</div>
+          <div class="col">
+            <div class="row"> 
+                <div class="col w-10">EDIT</div>
+                <div class="col w-10">LOGIC</div>
+                <div class="col w-10">DELETE</div>
             </div>
-        </nav>
+           </div>
+
+
+        </div>
+      </div>
+    </div>
+
 
 
 
         </div>
+
+
+
 
 
 

@@ -136,3 +136,14 @@ position:relative;
     background-color: #353535;
     color: white;
 }
+
+.grad {
+  background-image: linear-gradient(orange, gray);
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+}
