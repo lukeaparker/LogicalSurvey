@@ -68,36 +68,33 @@
             </div>
         </div>
 
-        <div class="col-9 overflow-auto border-left" style="height: 100%; padding: 0px;">
-            <div class="row">
+        <div class="col-9 overflow-auto border-left" style="height: 100%; padding: 0px; background-color: #202020; color: white;">
+
+
+
+            
+<div style="background-color: #ff3333;">
                 <div class="col">
-                    <h1 class="text-left">Manage Questionnaire</h1>
-                </div>
-                <div class="col">
-                    <h1 class="text-left">Manage Questionnaire</h1>
-                </div>
+                    <h1 class="text-left" style="font-size: 60px; padding-left: 20px;">Edit Form</h1>
+                </div> 
+
+                        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">                
+            <a class="btn" style="color: white;" href="/logout"><i class="material-icons" style="vertical-align: middle">settings</i> Settings</a>
+                <a class="btn" style="color: white;" href="/logout"><i class="material-icons" style="vertical-align: middle">add</i> Add Question</a>
+                <a class="btn" style="color: white;" href="/logout"><i class="material-icons" style="vertical-align: middle">preview</i> Preview</a>
+                                <a class="btn" style="color: white;" href="/logout"><i class="material-icons" style="vertical-align: middle">publish</i> Publish</a>
             </div>
-            <div class="dropdown mt-3">
-                        <button class="btn btn-primary dropdown-toggle w-100" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Add new question
-                        </button>
-                        <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item"
-                                href="/admin/manage-questionnaire/create-question/main/multiple_choice">Multiple
-                                Choice</a>
-                            <a class="dropdown-item"
-                                href="/admin/manage-questionnaire/create-question/main/user_input">User
-                                Input</a>
-                            <a class="dropdown-item"
-                                href="/admin/manage-questionnaire/create-question/main/yes-no">Yes/No</a>
-                            <a class="dropdown-item"
-                                href="/admin/manage-questionnaire/create-question/main/statement">Statement</a>
-                            <a class="dropdown-item"
-                                href="/admin/manage-questionnaire/create-question/main/question-group">Question
-                                Group</a>
-                        </div>
-                    </div>
+        </nav>
+
+
+
+        </div>
+
+
+
+
+
             {% for question in questions %}
                 {% include 'manage_questionnaire/partials/question-card.html' %}
             {% endfor %}
