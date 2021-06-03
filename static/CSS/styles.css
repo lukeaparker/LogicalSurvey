@@ -137,13 +137,9 @@ position:relative;
     color: white;
 }
 
-.grad {
-  background-image: linear-gradient(orange, gray);
-}
 
-.center {
-  margin: auto;
-  width: 50%;
-  border: 3px solid green;
-  padding: 10px;
+
+.btn {
+  radius: 20px;
+  background-color: red;
 }
