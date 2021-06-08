@@ -1,6 +1,5 @@
 {% if question %}
 <form action="/admin/manage-questionnaire/update/{{ question._id }}" method="post">
-    <h1>Edit Yes - No</h1>
     <div class="form-group text-left">
         <label for="question-text">Question Text</label>
         <input type="text" name="question-text" class="form-control" id="question-text"

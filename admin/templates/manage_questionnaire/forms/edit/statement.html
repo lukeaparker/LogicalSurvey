@@ -1,6 +1,5 @@
 {% if question %}
 <form action="/admin/manage-questionnaire/update/{{ question._id }}" method="post" enctype=multipart/form-data>
-  <h1>Edit Statement</h1>
   <script>
     function readURL(input) {
       if (input.files && input.files[0]) {

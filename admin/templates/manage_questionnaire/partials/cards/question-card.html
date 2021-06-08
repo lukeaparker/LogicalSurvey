@@ -1,0 +1,41 @@
+
+
+    <div class="card card-dark card-item w-100 text-left" style="width: 100%;">
+      <div class="card-body w-100">
+        <div class="row w-100">
+       
+        
+
+          <div class="col w-70">{{question.text}}</div>
+          <div class="col">
+            <div class="row"> 
+              <div class="col w-10"><a href="#question-edit-{{ question._id }}" data-toggle="modal" data-target="#question-edit-{{ question._id }}"><i class="material-icons" style="vertical-align: middle">edit</i></a></form></div>
+
+              
+                
+              
+                            <div class="col w-10"><a href="#question-logic-{{ question._id }}" data-toggle="modal" data-target="#question-logic-{{ question._id }}"><i class="material-icons" style="vertical-align: middle">add</i> Logic</a></form></div>
+
+                              <div class="col w-10"><a href="#" onclick="$(this).closest('form').submit()"><i class="material-icons" style="vertical-align: middle">delete</i></a></form></div>
+            </div>
+           </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+    {% include 'manage_questionnaire/partials/modals/edit.html' %}
+    {% include 'manage_questionnaire/partials/modals/logic.html' %}
+
+
+
+
+    
+
+

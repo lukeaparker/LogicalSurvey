@@ -39,40 +39,8 @@
     </div>
 </nav>
 
+{% include 'manage_questionnaire/partials/modals/settings.html' %}
 
-    <!-- Modal -->
-    <div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content" style="background-color: #404040; border-radius: 30px;">
-         
-            <div class="modal-body">
-               <i class="material-icons" style="vertical-align: middle">settings</i> Settings 
-                                    <form class="p-3" action="/admin/manage_questionnaire/update-results" method="POST">
-                                                            <div class="form-group text-left">
-                            <label for="questionnaire-summary">Is Single Page</label>
-                            <select class="btn btn-secondary dropdown-toggle form-control" name="is-single-page" style="background-color: #303030; border: none;">
-                                <option value="yes" {{ "selected" if questionnaire_settings.is_single_page else "" }}>Yes</option>
-                                <option value="no" {{ "" if questionnaire_settings.is_single_page else "selected" }}>No</option>
-                            </select>
-                        </div>
-                        <div class="form-group text-left">
-                            <label for="questionnaire-heading">Results Page Heading</label>
-                            <textarea class="form-control" id="questionnaire-heading" name="questionnaire-heading" style="background-color: #303030; border: none;"
-                                rows="2">{{questionnaire_settings.heading if questionnaire_settings.heading else ''}}</textarea>
-                        </div>
-                        <div class="form-group text-left">
-                            <label for="questionnaire-summary">Results Page Summary</label>
-                            <textarea class="form-control" id="questionnaire-summary" name="questionnaire-summary" style="background-color: #303030; border: none;"
-                                rows="2">{{questionnaire_settings.summary if questionnaire_settings.summary else ''}}</textarea>
-                        </div>
-                        
 
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary w-100" style="background-color: #ff3333; border: none;  border-radius: 30px;">Update Settings</button>
-                        </div>
-                    </form>
-            </div>
-        
-          </div>
-        </div>
-      </div>
+
+    

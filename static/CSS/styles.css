@@ -133,6 +133,10 @@ position:relative;
 }
 
 .form-control:focus {
-    background-color: #353535;
+    background-color: #orange;
     color: white;
+}
+
+.custom-modal {
+  background-color: pink;
 }
