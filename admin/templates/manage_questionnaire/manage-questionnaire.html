@@ -1,49 +1,61 @@
 {% extends 'base.html' %}
 {% block content %}
-
-
-
-<div class="content overflow-hidden h-100 ">
-    <div class="row overflow-hidden h-100">
-        <div class="col-2" style="background-color: #404040;">
-        <h1>kjasfkdj</h1>
-          
+<div class="row overflow-hidden h-100">
+    <div class="col-3 p-3 d-flex flex-column" style="background-color: black; color: white;">
+        <a href="/" style="color: white;"><h2>WriteForm</h2></a>
+        <div class="bg-dark text-left border-bottom border-secondary">
+            <div class="list-group-item list-group-item-action list-group-item-dark">Home</div>
+            <div class="list-group-item list-group-item-action list-group-item-dark">Questionnaires</div>
+            <div class="list-group-item list-group-item-action list-group-item-dark">Submissions</div>
         </div>
-
-        <div class="col-9 overflow-auto" style="height: 100%; padding: 0px; background-color: #484848; color: white;">
-
-
-     
- 
-<div style="background-color: #ff3333; height: 250px;">
-    {% include 'manage_questionnaire/partials/nav.html' %}
-
-                <div class="container">
-                    <h1 class="text-left" style="font-size: 60px; padding-left: 50px; padding-top: 30px;">Edit Form</h1>
-
-                                <div class="text-left" style="padding-left: 50px; padding-top: 30px;">
-                                
-                                    <a class="d-inline p-6 btn btn-secondary" style="background-color: black; border-radius: 30px;" href="/admin/manage-questionnaire/preview"><i class="material-icons" style="vertical-align: middle">preview</i> Preview</a>
-                                    <a class="d-inline p-6 btn btn-secondary" style="margin-left: 15px; background-color: black; border-radius: 30px;" href="https://support.zeta-apps.com/helpdesk/etrax/clients"><i class="material-icons" style="vertical-align: middle">publish</i> Publish</a>
-                                    </div>
-                                </div>
-                            </div> 
-
-
-
-
-
-
-
-
-
+        <div class="bg-dark text-left h-75 p-3">
+            <a style="cursor: pointer; color: rgb(118, 118, 118);">Questionnaire 1</a>
+        </div>
+    </div>
+    <div class="col-9 h-100 overflow-auto p-0" style="color: white;">
+        <div class="h-25" style="padding: 0 0 900px 0; margin: 0 auto -700px; background-image: linear-gradient(#ff3333, #121212 35%);">
+            {% include 'manage_questionnaire/partials/nav.html' %}
+            <h1 class="text-left pl-5 pt-1">Edit Form</h1>
+            <div class="text-left d-flex pl-5 pt-1">
+                <button type="button" class="btn btn-dark btn-sm btn-dark rounded-pill mr-1" data-toggle="modal" data-target="#settings">
+                    <i class="material-icons" style="vertical-align: middle">settings</i> Settings 
+                </button>
+                <a class="d-inline p-6 mr-1 btn btn-sm btn-dark rounded-pill" href="/admin/manage-questionnaire/preview">
+                    <i class="material-icons" style="vertical-align: middle">preview</i>
+                    Preview
+                </a>
+                <a class="d-inline p-6 mr-1 btn btn-sm btn-dark rounded-pill" href="">
+                    <i class="material-icons" style="vertical-align: middle">publish</i>
+                    Publish
+                </a>
+                <div class="dropdown mr-1">
+                    <button class="btn btn-dark btn-sm dropdown-toggle rounded-pill" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="material-icons" style="vertical-align: middle">add</i>
+                        Add Question
+                    </button>
+                    <div class="dropdown-menu w-100" style="background-color: #202020;" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" style="color: white;"
+                            href="/admin/manage-questionnaire/create-question/main/multiple_choice">Multiple
+                            Choice</a>
+                        <a class="dropdown-item" style="color: white;"
+                            href="/admin/manage-questionnaire/create-question/main/user_input">User
+                            Input</a>
+                        <a class="dropdown-item" style="color: white;"
+                            href="/admin/manage-questionnaire/create-question/main/yes-no">Yes/No</a>
+                        <a class="dropdown-item" style="color: white;"
+                            href="/admin/manage-questionnaire/create-question/main/statement">Statement</a>
+                        <a class="dropdown-item" style="color: white;"
+                            href="/admin/manage-questionnaire/create-question/main/question-group">Question
+                            Group</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin: 0 0 0; padding: 0; height: 300px; background-color: #1212125d;">
             {% for question in questions %}
-                {% include 'manage_questionnaire/partials/cards/question-card.html' %}
+            {% include 'manage_questionnaire/partials/cards/question-card.html' %}
             {% endfor %}
         </div>
     </div>
 </div>
-
-
-
 {% endblock %}

@@ -1,12 +1,11 @@
-
-
 * {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   background-color: #121212;
 }
@@ -18,8 +17,7 @@ body {
   font-style: normal;
   font-weight: normal;
   background-color: #121212;
-  font-family: 'Montserrat';
-
+  font-family: "Montserrat";
 }
 
 .card {
@@ -38,15 +36,6 @@ body {
   padding-bottom: 30px;
 }
 
-h2 {
-  font-size: 2.5rem;
-  padding-bottom: 15px;
-}
-
-h4 {
-  font-size: 1.5rem;
-}
-
 p {
   font-size: 24px;
 }
@@ -57,7 +46,12 @@ p {
   color: #9e9e9e;
 }
 
-a, a:hover, a:active, a:visited { color: #9e9e9e;  }
+a,
+a:hover,
+a:active,
+a:visited {
+  color: #9e9e9e;
+}
 
 a:link {
   text-decoration: none;
@@ -78,8 +72,8 @@ a:link {
 }
 
 .nav-button:active {
-position:relative;
-  top:1px;
+  position: relative;
+  top: 1px;
 }
 
 .apply-button {
@@ -128,15 +122,32 @@ position:relative;
 }
 
 .form-control {
-    background-color: #202020;
-    color: white;
+  background-color: #202020;
+  color: white;
 }
 
 .form-control:focus {
-    background-color: #orange;
-    color: white;
+  background-color: orange;
+  color: white;
 }
 
 .custom-modal {
   background-color: pink;
+}
+
+.btn-dark {
+  background-color: #212121;
+}
+
+.bg-dark {
+  background-color: black !important;
+}
+
+.list-group-item-dark {
+  background-color: black !important;
+  color: rgb(118, 118, 118) !important;
+}
+
+.list-group-item-dark:hover {
+  background-color: rgb(31, 31, 31) !important;
 }

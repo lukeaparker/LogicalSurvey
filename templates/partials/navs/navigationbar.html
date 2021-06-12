@@ -4,37 +4,39 @@
             <li class="nav-item-lg active">
                 <button type="button" style="background-color: black; border-radius: 30px;" class="btn btn-secondary" data-toggle="modal" data-target="#settings">
                     <i class="material-icons" style="vertical-align: middle">settings</i> Settings 
-                  </button>            
-                </li>
+                </button>
+            </li>
             <li class="nav-item-lg" style="margin-left: 15px;">
-                    <div class="dropdown">
- <a class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: black; border-radius: 30px;">
-    <i class="material-icons" style="vertical-align: middle">add</i> Add Question</a>
-                        <div class="dropdown-menu w-100" style="background-color: #202020;" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" style="color: white;"
-                                href="/admin/manage-questionnaire/create-question/main/multiple_choice">Multiple
-                                Choice</a>
-                            <a class="dropdown-item" style="color: white;"
-                                href="/admin/manage-questionnaire/create-question/main/user_input">User
-                                Input</a>
-                            <a class="dropdown-item" style="color: white;"
-                                href="/admin/manage-questionnaire/create-question/main/yes-no">Yes/No</a>
-                            <a class="dropdown-item" style="color: white;"
-                                href="/admin/manage-questionnaire/create-question/main/statement">Statement</a>
-                            <a class="dropdown-item" style="color: white;"
-                                href="/admin/manage-questionnaire/create-question/main/question-group">Question
-                                Group</a>
-                        </div>
-                    </div>            </li>
+                <div class="dropdown">
+                    <a class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" 
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: black; border-radius: 30px;">
+                    <i class="material-icons" style="vertical-align: middle">add</i> Add Question</a>
+                    <div class="dropdown-menu w-100" style="background-color: #202020;" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" style="color: white;"
+                            href="/admin/manage-questionnaire/create-question/main/multiple_choice">Multiple
+                            Choice</a>
+                        <a class="dropdown-item" style="color: white;"
+                            href="/admin/manage-questionnaire/create-question/main/user_input">User
+                            Input</a>
+                        <a class="dropdown-item" style="color: white;"
+                            href="/admin/manage-questionnaire/create-question/main/yes-no">Yes/No</a>
+                        <a class="dropdown-item" style="color: white;"
+                            href="/admin/manage-questionnaire/create-question/main/statement">Statement</a>
+                        <a class="dropdown-item" style="color: white;"
+                            href="/admin/manage-questionnaire/create-question/main/question-group">Question
+                            Group</a>
+                    </div>
+                </div>
+            </li>
         </ul>
     </div>
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2"><button type="button" style="background-color: black; border-radius: 30px;" class="btn btn-secondary" data-toggle="modal" data-target="#settings">
+        <i class="material-icons" style="vertical-align: middle">settings</i> Settings 
+    </button>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item" style="padding-right: 30px;">
                 <a class="btn btn-secondary" style="background-color: black; border-radius: 30px;" href="https://support.zeta-apps.com/helpdesk/etrax/clients"><i class="material-icons" style="vertical-align: middle">logout</i> Logout</a>
-
-
-                </li>
+            </li>
         </ul>
     </div>
 </nav>
@@ -50,20 +52,13 @@
                                     <form class="p-3" action="/admin/manage_questionnaire/update-results" method="POST">
                                                             <div class="form-group text-left">
                             <label for="questionnaire-summary">Is Single Page</label>
-                            <select class="btn btn-secondary dropdown-toggle form-control" name="is-single-page" style="background-color: #303030; border: none;">
-                                <option value="yes" {{ "selected" if questionnaire_settings.is_single_page else "" }}>Yes</option>
-                                <option value="no" {{ "" if questionnaire_settings.is_single_page else "selected" }}>No</option>
-                            </select>
+                            
                         </div>
                         <div class="form-group text-left">
                             <label for="questionnaire-heading">Results Page Heading</label>
-                            <textarea class="form-control" id="questionnaire-heading" name="questionnaire-heading" style="background-color: #303030; border: none;"
-                                rows="2">{{questionnaire_settings.heading if questionnaire_settings.heading else ''}}</textarea>
                         </div>
                         <div class="form-group text-left">
                             <label for="questionnaire-summary">Results Page Summary</label>
-                            <textarea class="form-control" id="questionnaire-summary" name="questionnaire-summary" style="background-color: #303030; border: none;"
-                                rows="2">{{questionnaire_settings.summary if questionnaire_settings.summary else ''}}</textarea>
                         </div>
                         
 
