@@ -3,8 +3,27 @@ import bcrypt
 from db import db
 from utils import restricted
 import sys
+import os
+import re
+import uuid
+from flask import session, current_app
+from bson.objectid import ObjectId
+from werkzeug.utils import secure_filename
+from os.path import join
+import bcrypt
+import uuid
+import argparse
+from pymongo import MongoClient
+from flask import Flask, current_app
+from dotenv import load_dotenv
+load_dotenv()
 
 auth = Blueprint('auth', __name__, template_folder='templates')
+from app import users
+
+
+
+
 
 
 @auth.route('/admin')
@@ -20,7 +39,7 @@ def login():
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
     
-    admin = db.users.find_one({'email': email})
+    admin = users.users.find_one({'email': email})
 
     if not admin or not bcrypt.checkpw(password.encode('utf-8'), admin['password']):
         print('Email or password was incorrect, please try agian')

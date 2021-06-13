@@ -611,6 +611,21 @@ class Questionnaires():
             self.questionnaires.append(questionnaire)
             _id + 1
     
-
+class Users():
+        
+    def __init__(self):
+        client = MongoClient('mongodb://root:yoMama@mongo:27017/users?authSource=admin')
+        self.db = client.get_default_database()
+        self.users = self.db.users
+    
+    def load_admins(self):
+        admin = {
+            'email': 'admin@zeta-apps.com',
+            'password': bcrypt.hashpw('yoMama'.encode('utf-8'), bcrypt.gensalt()),
+            'access_level': 'admin'
+        }
+        self.users.update({'email': admin['email']}, admin, upsert=True)
+        
+        
 
 

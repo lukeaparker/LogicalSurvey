@@ -4,9 +4,10 @@ from flask import Flask, session, g
 from bson.objectid import ObjectId
 from db import db
 load_dotenv()
-from admin.models import PublicQuestionnaire, PrivateQuestionnaire, Questionnaires
+from admin.models import Questionnaires, Users 
 
 questionnaires = Questionnaires()
+users = Users()
 
 
 def create_app(config_filename):
@@ -16,6 +17,7 @@ def create_app(config_filename):
  
     with app.app_context():
         questionnaires.load_app()
+        users.load_admins()
 
     # App Config
     app.secret_key = 'super secret key'
@@ -42,7 +44,7 @@ def create_app(config_filename):
     def load_user():
         user = getattr(g, 'user', None)
         if not user and 'user' in session and session["user"]:
-            user = db.users.find_one({'_id': ObjectId(session['user'])})
+            user = users.users.find_one({'_id': ObjectId(session['user'])})
         g.user = user
     return app
 
