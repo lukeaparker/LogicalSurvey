@@ -4,13 +4,18 @@ from flask import Flask, session, g
 from bson.objectid import ObjectId
 from db import db
 load_dotenv()
+from admin.models import PublicQuestionnaire, PrivateQuestionnaire, Questionnaires
+
+questionnaires = Questionnaires()
+
 
 def create_app(config_filename):
     app = Flask(__name__)
     app.config.from_pyfile(config_filename)
 
+ 
     with app.app_context():
-        db.load_app()
+        questionnaires.load_app()
 
     # App Config
     app.secret_key = 'super secret key'
@@ -20,8 +25,8 @@ def create_app(config_filename):
     from admin.manage_questionnaire import manage_questionnaire as manage_questionnaire_blueprint
     app.register_blueprint(manage_questionnaire_blueprint, url_prefix="/admin")
 
-    from questionnaire.questionnaire import questionnaire as questionnaire_blueprint
-    app.register_blueprint(questionnaire_blueprint, url_prefix="/questionnaire")
+    # from questionnaire.questionnaire import questionnaire as questionnaire_blueprint
+    # app.register_blueprint(questionnaire_blueprint, url_prefix="/questionnaire")
 
     from admin.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)

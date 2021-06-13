@@ -2,21 +2,21 @@
 <form action="/admin/manage-questionnaire/update/{{ question._id }}" method="post">
     <div class="form-group text-left">
         <label for="question-text">Question Text</label>
-        <input type="text" name="question-text" class="form-control" id="question-text"
+        <input type="text" name="question-text" class="form-control" id="question-text" style="background-color: #303030; border: none;
             placeholder="Enter question text" value="{{question.text}}">
     </div>
     <div class="form-group text-left">
         <label for="question-text">Question Substatement</label>
-        <input type="text" name="substatement" class="form-control" id="substatement" placeholder="Enter substatement"
+        <input type="text" name="substatement" class="form-control" id="substatement" placeholder="Enter substatement" style="background-color: #303030; border: none;
             value="{{question.substatement}}">
     </div>
     <div class="form-group text-left">
         <label for="question-reference" required>Question Identifier</label>
-        <input type="text" name="question-reference" class="form-control" id="question-reference"
+        <input type="text" name="question-reference" class="form-control" id="question-reference" style="background-color: #303030; border: none;
             placeholder="Enter question text" value="{{question.question_reference}}">
     </div>
     <div class="text-center">
-        <button type="submit" class="btn long-btn btn btn-primary w-100">Submit</button>
+        <button type="submit" class="btn long-btn btn btn-primary w-100" style="background-color: #ff3333; border: none;  border-radius: 30px;"">Submit</button>
     </div>
 </form>
 {% endif %}
