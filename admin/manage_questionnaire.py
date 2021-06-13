@@ -5,12 +5,14 @@ from flask import url_for, session, Blueprint, current_app, g
 from bson.objectid import ObjectId
 from os.path import join
 from utils import restricted
-from admin.models import PublicQuestionnaire, PrivateQuestionnaire
-from db import db
+from admin.models import PublicQuestionnaire, PrivateQuestionnaire, Questionnaires
+from app import questionnaires
+
+questionnaires = questionnaires.questionnaires
 
 
-private_questionnaire = PrivateQuestionnaire(db)
-public_questionnaire = PublicQuestionnaire(db)
+# private_questionnaire = PrivateQuestionnaire(db)
+# public_questionnaire = PublicQuestionnaire(db)
 manage_questionnaire = Blueprint('manage_questionnaire', __name__, template_folder='templates', static_folder='static')
 
 
@@ -23,13 +25,19 @@ def after_request_func(response):
 
 
 # View questionnaire
-@manage_questionnaire.route('/manage-questionnaire')
+@manage_questionnaire.route('/manage-questionnaire/<_id>')
 @restricted(access_level='admin')
-def manage_questionnaire_view():
+def manage_questionnaire_view(_id):
     """Return questionnaire portal for editing tools."""
     # to clear the questionnaire and logic jump collections uncomment the following line
     # private_questionnaire.questionnaire.remove()
     # private_questionnaire.logic_jumps.remove()
+    while True:
+        print('yourMom')
+    questionnaire = questionnaires[_id]
+    private_questionnaire = questionnaire[0]
+    db = questionnaire[2]
+
     questions = list(private_questionnaire.get_all_questions())
 
     questionnaire_settings = list(db.questionnaire_settings.find())

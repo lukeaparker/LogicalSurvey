@@ -18,7 +18,9 @@ ENV PORT 5000
 
 RUN export FLASK_APP="app:create_app('config/local.py')"
 
+
+
 # Expose port 5000 for app
 EXPOSE ${PORT}
 
-CMD ["sudo", "Flask", "run"]
+CMD ["python", "-u", "app.py"]
