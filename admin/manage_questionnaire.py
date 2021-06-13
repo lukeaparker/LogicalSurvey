@@ -32,10 +32,9 @@ def manage_questionnaire_view(_id):
     # to clear the questionnaire and logic jump collections uncomment the following line
     # private_questionnaire.questionnaire.remove()
     # private_questionnaire.logic_jumps.remove()
-    while True:
-        print('yourMom')
-    questionnaire = questionnaires[_id]
-    private_questionnaire = questionnaire[0]
+
+    questionnaire = questionnaires[int(_id)]
+    private_questionnaire = questionnaire[1]
     db = questionnaire[2]
 
     questions = list(private_questionnaire.get_all_questions())
