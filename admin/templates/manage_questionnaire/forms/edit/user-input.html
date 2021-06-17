@@ -1,5 +1,5 @@
 {% if question %}
-<form action="/admin/manage-questionnaire/update/{{ question._id }}" method="post">
+<form action="/admin/manage-questionnaire/{{_id}}/update/{{ question._id }}" method="post">
     <div class="form-group text-left">
         <label class="text-left" for="input_field_type">Question Field Type</label>
         <select name="input_field_type" class="form-control" style="background-color: #303030; border: none;">

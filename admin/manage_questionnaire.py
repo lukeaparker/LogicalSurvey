@@ -32,7 +32,7 @@ def manage_questionnaire_view(_id):
     # to clear the questionnaire and logic jump collections uncomment the following line
     # private_questionnaire.questionnaire.remove()
     # private_questionnaire.logic_jumps.remove()
-
+    print(questionnaires)
     questionnaire = questionnaires[int(_id)]
     private_questionnaire = questionnaire[1]
     db = questionnaire[2]
@@ -43,40 +43,32 @@ def manage_questionnaire_view(_id):
     questionnaire_settings = questionnaire_settings[0] if len(
         questionnaire_settings) > 0 else None
     return render_template('manage_questionnaire/manage-questionnaire.html', 
-        questions=questions, questionnaire_settings=questionnaire_settings, admin_page=True)
+        questions=questions, questionnaire_settings=questionnaire_settings, admin_page=True, _id=_id)
 
 
-@manage_questionnaire.route('/manage-questionnaire/create-question/<group_id>/<qtype>')
+@manage_questionnaire.route('/manage-questionnaire/<_id>/create-question/<group_id>/<qtype>')
 @restricted(access_level='admin')
-def create_question(group_id, qtype):
+def create_question(_id, group_id, qtype):
     """Creates a new quesion document in the questionnarie collection."""
+    
+    questionnaire = questionnaires[int(_id)]
+    private_questionnaire = questionnaire[1]
+    db = questionnaire[2]
+
     question_id = private_questionnaire.create_question(group_id, qtype)
-    return redirect(url_for('manage_questionnaire.manage_questionnaire_view', 
-        question_id=question_id))
+    return redirect(f'admin/manage-questionnaire/{_id}')
 
-
-@manage_questionnaire.route('/manage-questionnaire/update/<question_id>')
+@manage_questionnaire.route('/manage-questionnaire/<_id>/update/<question_id>', methods=['POST'])
 @restricted(access_level='admin')
-def question_update_view(question_id):
-    """Renders the edit view for the quesion with the given _id."""
-    question = private_questionnaire.get_question_by_id(question_id)
-    if question['qtype'] == 'question-group':
-        subquestions = private_questionnaire.get_all_group_questions(question_id)
-        questions = list(private_questionnaire.questionnaire.find({'group': ''}))
-        return render_template('manage_questionnaire/edit-question.html', question=question, qtype=question['qtype'],
-                               questions=questions, subquestions=subquestions)
-    questions = list(private_questionnaire.get_all_toplevel_questions())
-    image_url = os.path.join(current_app.config['FILE_GET_PATH'], question['filename'])
-    return render_template('manage_questionnaire/edit-question.html', question=question, qtype=question['qtype'],
-                           questions=questions, image_url=image_url)
-
-
-@manage_questionnaire.route('/manage-questionnaire/update/<question_id>', methods=['POST'])
-@restricted(access_level='admin')
-def question_update_controller(question_id):
+def question_update_controller(_id, question_id):
     """Updates the quesion document with the given is with a new document."""
+    
+    questionnaire = questionnaires[int(_id)]
+    private_questionnaire = questionnaire[1]
+    db = questionnaire[2]
+    
     private_questionnaire.update_question(question_id, request)
-    return redirect(url_for('manage_questionnaire.manage_questionnaire_view'))
+    return redirect(f'/admin/manage-questionnaire/{_id}')
 
 
 @manage_questionnaire.route('/manage-questionnaire/update/<question_id>/delete-image')

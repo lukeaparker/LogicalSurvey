@@ -51,7 +51,7 @@ class PrivateQuestionnaire():
         questionnaire_settings = list(db.questionnaire_settings.find())
         questionnaire_settings = questionnaire_settings[0] if len(
             questionnaire_settings) > 0 else None
-        self.is_single_page = questionnaire_settings['is_single_page']
+        # self.is_single_page = questionnaire_settings['is_single_page']
 
     def get_question_by_id(self, question_id):
         query = {'_id': ObjectId(question_id)}
@@ -360,30 +360,30 @@ class PrivateQuestionnaire():
 class Questionnaire(): 
 
     def __init__(self, _id): 
-        client = MongoClient(f'mongodb://root:yoMama@mongo:27017/inForm{_id}?authSource=admin')
-        self.db = client.get_default_database()
+        client = MongoClient(f'mongodb://root:yoMama@mongo:27017/questionnaire-{_id}?authSource=admin')
+        self.questionnaire = client.questionnaire
         self._id = _id
 
     def load_app(self):
         if current_app.config['DATABASE'] != 'test':
-            self.public_questionnaire = self.db.public_questionnaire
-            self.private_questionnaire = self.db.private_questionnaire
-            self.questionnaire_settings = self.db.questionnaire_settings
-            self.public_logic_jumps = self.db.public_logic_jumps
-            self.private_logic_jumps = self.db.private_logic_jumps
-            self.submissions = self.db.submissions 
-            self.users = self.db.users
-            self.preload()
+            self.public_questionnaire = self.questionnaire.public_questionnaire
+            self.private_questionnaire = self.questionnaire.private_questionnaire
+            self.questionnaire_settings = self.questionnaire.questionnaire_settings
+            self.public_logic_jumps = self.questionnaire.public_logic_jumps
+            self.private_logic_jumps = self.questionnaire.private_logic_jumps
+            self.submissions = self.questionnaire.submissions 
+            self.users = self.questionnaire.users
+            # self.preload()
         else:
             # Init test database 
-            self.public_questionnaire = self.db.public_questionnaire_test
-            self.private_questionnaire = self.db.private_questionnaire_test
-            self.questionnaire_settings = self.db.questionnaire_settings
-            self.public_logic_jumps = self.db.public_logic_jumps_test
-            self.private_logic_jumps = self.db.private_logic_jumps_test
-            self.submissions = self.db.submissions_test
-            self.users = self.db.users_test
-            self.preload()
+            self.public_questionnaire = self.questionnaire.public_questionnaire_test
+            self.private_questionnaire = self.questionnaire.private_questionnaire_test
+            self.questionnaire_settings = self.questionnaire.questionnaire_settings
+            self.public_logic_jumps = self.questionnaire.public_logic_jumps_test
+            self.private_logic_jumps = self.questionnaire.private_logic_jumps_test
+            self.submissions = self.questionnaire.submissions_test
+            self.users = self.questionnaire.users_test
+            # self.preload()
 
     def preload(self):
         admin = {
@@ -596,8 +596,6 @@ class Questionnaires():
 
     def __init__(self):
         client = MongoClient('mongodb://root:yoMama@mongo:27017/inForm?authSource=admin')
-        self.db = client.get_default_database()
-        self.count = self.db.count
         self.questionnaires = []
 
     def load_app(self):
@@ -615,8 +613,7 @@ class Users():
         
     def __init__(self):
         client = MongoClient('mongodb://root:yoMama@mongo:27017/users?authSource=admin')
-        self.db = client.get_default_database()
-        self.users = self.db.users
+        self.users = client.users
     
     def load_admins(self):
         admin = {
