@@ -9,15 +9,13 @@ from admin.models import Questionnaires, Users
 questionnaires = Questionnaires()
 users = Users()
 
-
 def create_app(config_filename):
     app = Flask(__name__)
     app.config.from_pyfile(config_filename)
 
- 
     with app.app_context():
         questionnaires.load_app()
-        users.load_admins()
+        users.load_default_user()
 
     # App Config
     app.secret_key = 'super secret key'

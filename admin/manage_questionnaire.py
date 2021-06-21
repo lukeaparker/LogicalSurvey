@@ -56,7 +56,7 @@ def create_question(_id, group_id, qtype):
     db = questionnaire[2]
 
     question_id = private_questionnaire.create_question(group_id, qtype)
-    return redirect(f'admin/manage-questionnaire/{_id}')
+    return redirect(f'/manage-questionnaire/{_id}')
 
 @manage_questionnaire.route('/manage-questionnaire/<_id>/update/<question_id>', methods=['POST'])
 @restricted(access_level='admin')

@@ -13,7 +13,7 @@ from flask import Flask, current_app
 from dotenv import load_dotenv
 load_dotenv()
 
-
+client = MongoClient('mongodb://root:yoMama@mongo:27017/users?authSource=admin')
 valid_subquestions = ['yes-no', 'user_input', 'multiple_choice', 'statement']
 
 # Session Keys
@@ -360,8 +360,8 @@ class PrivateQuestionnaire():
 class Questionnaire(): 
 
     def __init__(self, _id): 
-        client = MongoClient(f'mongodb://root:yoMama@mongo:27017/questionnaire-{_id}?authSource=admin')
-        self.questionnaire = client.questionnaire
+        self.db = client[f"questionnaire{_id}"]
+        self.questionnaire = self.db[f"questionnaire{_id}"]        
         self._id = _id
 
     def load_app(self):
@@ -595,7 +595,8 @@ class Questionnaire():
 class Questionnaires():
 
     def __init__(self):
-        client = MongoClient('mongodb://root:yoMama@mongo:27017/inForm?authSource=admin')
+        self.db = client["questionnaires"]
+        self.count = self.db["count"]
         self.questionnaires = []
 
     def load_app(self):
@@ -607,21 +608,27 @@ class Questionnaires():
             private = PrivateQuestionnaire(qdb)
             questionnaire = (public, private, qdb)
             self.questionnaires.append(questionnaire)
-            _id + 1
+            _id += 1
+
+        for q in self.questionnaires:
+            print(q[2].db)
+
     
 class Users():
         
     def __init__(self):
-        client = MongoClient('mongodb://root:yoMama@mongo:27017/users?authSource=admin')
-        self.users = client.users
+        self.db = client["users"]
+        self.users = self.db["users"]
+
     
-    def load_admins(self):
+    def load_default_user(self):
         admin = {
             'email': 'admin@zeta-apps.com',
             'password': bcrypt.hashpw('yoMama'.encode('utf-8'), bcrypt.gensalt()),
             'access_level': 'admin'
         }
-        self.users.update({'email': admin['email']}, admin, upsert=True)
+        self.users.insert_one(admin)
+
         
         
 

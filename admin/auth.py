@@ -17,6 +17,7 @@ from pymongo import MongoClient
 from flask import Flask, current_app
 from dotenv import load_dotenv
 load_dotenv()
+from app import users  
 
 auth = Blueprint('auth', __name__, template_folder='templates')
 from app import users
@@ -40,6 +41,7 @@ def login():
     remember = True if request.form.get('remember') else False
     
     admin = users.users.find_one({'email': email})
+    print(admin)
 
     if not admin or not bcrypt.checkpw(password.encode('utf-8'), admin['password']):
         print('Email or password was incorrect, please try agian')
