@@ -42,8 +42,9 @@ def manage_questionnaire_view(_id):
     questionnaire_settings = list(db.questionnaire_settings.find())
     questionnaire_settings = questionnaire_settings[0] if len(
         questionnaire_settings) > 0 else None
+    print(questionnaires)
     return render_template('manage_questionnaire/manage-questionnaire.html', 
-        questions=questions, questionnaire_settings=questionnaire_settings, admin_page=True, _id=_id)
+        questions=questions, questionnaire_settings=questionnaire_settings, admin_page=True, _id=_id, questionnaires=questionnaires)
 
 
 @manage_questionnaire.route('/manage-questionnaire/<_id>/create-question/<group_id>/<qtype>')

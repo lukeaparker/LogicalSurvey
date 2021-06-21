@@ -7,9 +7,12 @@
             <div class="list-group-item list-group-item-action list-group-item-dark">Home</div>
             <div class="list-group-item list-group-item-action list-group-item-dark">Questionnaires</div>
             <div class="list-group-item list-group-item-action list-group-item-dark">Submissions</div>
+            {% for questionnaire in questionnaires %}
+                <div class="list-group-item list-group-item-action list-group-item-dark"><a href="/admin/manage-questionnaire/{{questionnaire[2]._id}}">Questionnaire {{questionnaire[2]._id}}</a></div>
+            {% endfor %}
         </div>
         <div class="bg-dark text-left h-75 p-3">
-            <a style="cursor: pointer; color: rgb(118, 118, 118);">Questionnaire 1</a>
+        
         </div>
     </div>
     <div class="col-9 h-100 overflow-auto p-0" style="color: white;">
