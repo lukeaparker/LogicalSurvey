@@ -5,7 +5,7 @@ from flask import url_for, session, Blueprint, current_app, g
 from bson.objectid import ObjectId
 from os.path import join
 from utils import restricted
-from admin.models import PublicQuestionnaire, PrivateQuestionnaire, Questionnaires
+from admin.models import PublicQuestionnaire, PrivateQuestionnaire, Questionnaires, Questionnaire
 from app import questionnaires
 
 questionnaires = questionnaires.questionnaires
@@ -22,6 +22,24 @@ def after_request_func(response):
         session['clear_session'] = False
         session.clear()
     return response
+
+
+
+# View questionnaire
+@manage_questionnaire.route('/manage-questionnaire/create/questionnaire', methods=["POST"])
+@restricted(access_level='admin')
+def create_questionnaire_controller():
+    """Create a questionnaire"""
+    print(request.form)
+    _id = len(questionnaires)
+    qdb = Questionnaire(_id)
+    qdb.load_app()
+    public = PublicQuestionnaire(qdb)
+    private = PrivateQuestionnaire(qdb)
+    questionnaire = (public, private, qdb)
+    questionnaires.append(questionnaire)
+    return redirect(f'/admin/manage-questionnaire/{_id}')
+
 
 
 # View questionnaire

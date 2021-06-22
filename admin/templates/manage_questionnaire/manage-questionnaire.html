@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="row overflow-hidden h-100">
-    <div class="col-3 p-3 d-flex flex-column" style="background-color: black; color: white;">
-        <a href="/" style="color: white;"><h2>WriteForm</h2></a>
+    <div class="col-3 p-3 d-flex flex-column" style="background-color: black; color: white; padding: 10px;">
+        <a href="/" class="text-left" style="color: white;"><h2>WriteForm</h2></a>
         <div class="bg-dark text-left border-bottom border-secondary">
-            <div class="list-group-item list-group-item-action list-group-item-dark">Home</div>
-            <div class="list-group-item list-group-item-action list-group-item-dark">Questionnaires</div>
-            <div class="list-group-item list-group-item-action list-group-item-dark">Submissions</div>
+            <div class="list-group-item list-group-item-action list-group-item-dark"><a href="" data-toggle="modal" data-target="#create-questionnaire"><i class="material-icons" style="vertical-align: middle">add</i> New Questionnaire</a></div>
             {% for questionnaire in questionnaires %}
                 <div class="list-group-item list-group-item-action list-group-item-dark"><a href="/admin/manage-questionnaire/{{questionnaire[2]._id}}">Questionnaire {{questionnaire[2]._id}}</a></div>
             {% endfor %}
@@ -61,4 +59,5 @@
         </div>
     </div>
 </div>
+{% include 'manage_questionnaire/partials/modals/create-questionnaire.html' %}
 {% endblock %}
